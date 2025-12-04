@@ -54,7 +54,7 @@ function actualizarResumen() {
 }
 
 //Agregar a cada boton una accion en directos
-document.querySelectorAll(".ventas-directas button")
+document.querySelectorAll("#ventas-directas button")
     .forEach(boton => {
         boton.addEventListener("click", () => {
             const nombre = boton.dataset.nombre;
@@ -86,7 +86,7 @@ document.querySelector("#btn-agregar-indirecto").addEventListener("click", () =>
     productosIndirectos.push({ producto, cantidad, precio });
 
     const registros = document.createElement("li");
-    registros.innerHTML = `${producto} x ${cantidad} a $${precio} = $${(precio * cantidad).toFixed(2)}`;
+    registros.innerHTML = `${producto} (${cantidad}) a $${precio} = $${(precio * cantidad).toFixed(2)}`;
 
     lista.appendChild(registros);
     // Limpiar inputs después de agregar
