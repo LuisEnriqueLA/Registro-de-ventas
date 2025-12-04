@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <!-- Se generara un total de todo lo que se vendio-->
+        <h1>Total vendido</h1>
+        <section id="total">$0.00</section>
+    </header>
+
+    <main>
+        <!-- Se registraran los pruductos ya definidos -->
+        <section class="container ventas-directas">
+            <h2>Ventas Directas</h2>
+
+            <button data-nombre="Cantinera" data-precio="60">Cantinera $60</button>
+            <button data-nombre="5kg" data-precio="20">5kg $20</button>
+            <button data-nombre="Molido" data-precio="40">Molido $40</button>
+            <button data-nombre="1/4 Entero" data-precio="40">1/4 Entero $40</button>
+            <button data-nombre="3kg" data-precio="12">3kg $12</button>
+        </section>
+
+        <section class="container ventas-indirectas">
+            <!-- Se registraran ventas no definidas pero de ingreso justificado-->
+            <h2>Ventas Indirectas</h2>
+
+            <input id="vendedor" type="text" placeholder="Vendedor">
+
+            <h3>Agregar producto</h3>
+
+            <select id="tipo-indirecto">
+                <option value="">Seleccionar producto</option>
+                <option value="Cantinera">Cantinera</option>
+                <option value="5kg">5kg</option>
+                <option value="Molido">Molido</option>
+                <option value="1/4 Entero">1/4 Entero</option>
+                <option value="3kg">3kg</option>
+            </select>
+
+            <input id="cant-indirecta" type="number" placeholder="Cantidad">
+
+            <input type="number" id="precio-indirecto" placeholder="Precio">
+
+            <button id="btn-agregar-indirecto">Agregar producto</button>
+
+            <ul id="lista-productos">
+                <!-- Aquí se agregan los productos antes de registrarlos -->
+            </ul>
+
+            <button id="btn-indirecta">Registrar venta</button>
+
+        </section>
+
+        <section class="container gastos">
+            <!-- Se registraran los gastos que restan al total -->
+            <h2>Gastos</h2>
+
+            <input id="desc-gasto" type="text" placeholder="Descripción del gasto">
+            <input id="monto-gasto" type="number" placeholder="Monto">
+            <button id="btn-gasto">Registrar gasto</button>
+        </section>
+    </main>
+
+    <footer class="container">
+        <!-- Se mostraran todos los movimientos realizados-->
+        <h2>Resumen de ventas directas</h2>
+
+        <table id="tabla-directo">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h2>Resumen de ventas indirectas</h2>
+
+        <table id="tabla-indirecto">
+            <thead>
+                <tr>
+                    <th>Vendedor</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h2>Gastos</h2>
+        <table id="tabla-gastos">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+
+    </footer>
+</body>
+<script src="App.js"></script>
+</html>
