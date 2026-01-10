@@ -1,130 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventas</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-    @theme {
-        --color-fondo: #0a001f;
-        --color-titulo: #d600ff;
-        --color-panel: #15151d;
-        --color-entrada: #111;
-      }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventas</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-      .btn {
-            @apply bg-panel text-white px-4 py-2 rounded border border-titulo hover:bg-titulo flex flex-wrap gap-3 mt-4;
-        }
+<style type="text/tailwindcss">
+@theme {
+    --color-bg: #050505;
+    --color-panel: #0d0d1a;
+    --color-accent: #1e40ff;
+    --color-text: #dbe4ff;
+}
 
-        .entrada {
-            @apply bg-entrada text-white px-3 py-2 rounded border border-panel focus:border-titulo focus:ring focus:ring-titulo/40;
-        }
+.btn {
+    @apply bg-[--color-panel] text-[--color-text] px-4 py-2 
+    rounded border border-[--color-accent] hover:bg-[--color-accent]/40 transition;
+}
 
-        .panel {
-            @apply bg-panel p-6 border rounded-md shadow-md m-2;
-        }
+.entrada {
+    @apply bg-[--color-panel] text-[--color-text] px-3 py-2 
+    rounded border border-[--color-accent]/40 focus:border-[--color-accent] focus:ring;
+}
 
-        .titulo{
-            @apply text-titulo font-bold;
-        }
+.panel {
+    @apply bg-[--color-panel] p-6 border border-[--color-accent]/20 rounded-md shadow-md m-2;
+}
 
-        .tabla {
-            @apply w-full border-collapse text-sm;
-        }
+.tabla {
+    @apply w-full border-collapse text-sm;
+}
 
+.th {
+    @apply bg-[--color-panel] text-[--color-text] font-bold p-2 border-b border-[--color-accent];
+}
 
-        .th {
-            @apply bg-panel text-white font-bold p-2 border-b border-titulo;
-        }
+.td {
+    @apply p-2 border-b border-[--color-panel];
+}
 
-        .td {
-            @apply p-2 border-b border-panel;
-        }
-
-        .tr {
-            @apply hover:bg-panel/40 transition;
-        }
-
-        .tr:nth-child(even) {
-            @apply bg-panel/30;
-        }
-
-    </style>
+.tr {
+    @apply hover:bg-[--color-accent]/10 transition;
+}
+</style>
 </head>
-<body class="bg-fondo text-white h-screen">
-    <header class="text-5xl p-8">
-        <!-- Se generara un total de todo lo que se vendio-->
-        <h1 class="titulo">Total vendido</h1>
-        <section id="total">$0.00</section>
-    </header>
 
-    <main class="panel">
-        <!-- Se registraran los pruductos ya definidos -->
-        <section class="panel" id="ventas-directas">
-            <h2 class="titulo">Ventas Directas</h2>
+<body class="bg-[--color-bg] text-[--color-text] min-h-screen">
 
-            <button class="btn" data-nombre="Cantinera" data-precio="60">Cantinera $60</button>
-            <button class="btn" data-nombre="5kg" data-precio="20">5kg $20</button>
-            <button class="btn" data-nombre="Molido" data-precio="40">Molido $40</button>
-            <button class="btn" data-nombre="1/4 Entero" data-precio="40">1/4 Entero $40</button>
-            <button class="btn" data-nombre="3kg" data-precio="12">3kg $12</button>
-        </section>
+<header class="text-4xl p-6">
+    <h1 class="font-bold text-[--color-accent]">Total vendido</h1>
+    <section id="total" class="text-3xl">$0.00</section>
+</header>
 
-        <section class="panel">
-            <!-- Se registraran ventas no definidas pero de ingreso justificado-->
-            <h2 class="titulo">Ventas Indirectas</h2>
+<main class="panel">
+    <!-- Ventas directas -->
+    <section class="panel" id="ventas-directas">
+        <h2 class="text-[--color-accent] font-bold mb-2">Ventas Directas</h2>
 
-            <input class="entrada" id="vendedor" type="text" placeholder="Vendedor">
+        <button class="btn" data-nombre="Cantinera" data-precio="60">Cantinera $60</button>
+        <button class="btn" data-nombre="5kg" data-precio="20">5kg $20</button>
+        <button class="btn" data-nombre="Molido" data-precio="40">Molido $40</button>
+        <button class="btn" data-nombre="1/4 Entero" data-precio="40">1/4 Entero $40</button>
+        <button class="btn" data-nombre="3kg" data-precio="12">3kg $12</button>
+    </section>
 
-            <h3>Agregar producto</h3>
+    <!-- Ventas indirectas -->
+    <section class="panel">
+        <h2 class="text-[--color-accent] font-bold mb-2">Ventas Indirectas</h2>
 
-            <select class="entrada" id="tipo-indirecto">
-                <option value="">Seleccionar producto</option>
-                <option value="Cantinera">Cantinera</option>
-                <option value="5kg">5kg</option>
-                <option value="Molido">Molido</option>
-                <option value="1/4 Entero">1/4 Entero</option>
-                <option value="3kg">3kg</option>
-            </select>
+        <input class="entrada" id="vendedor" type="text" placeholder="Vendedor">
 
-            <input class="entrada" id="cant-indirecta" type="number" placeholder="Cantidad">
+        <select class="entrada" id="tipo-indirecto">
+            <option value="">Seleccionar producto</option>
+            <option value="Cantinera">Cantinera</option>
+            <option value="5kg">5kg</option>
+            <option value="Molido">Molido</option>
+            <option value="1/4 Entero">1/4 Entero</option>
+            <option value="3kg">3kg</option>
+        </select>
 
-            <input class="entrada" type="number" id="precio-indirecto" placeholder="Precio">
+        <input class="entrada" id="cant-indirecta" type="number" placeholder="Cantidad">
+        <input class="entrada" id="precio-indirecto" type="number" placeholder="Precio">
 
-            <button class="btn" id="btn-agregar-indirecto">Agregar producto</button>
+        <button class="btn" id="btn-agregar-indirecto">Agregar producto</button>
+        <ul id="lista-productos"></ul>
 
-            <ul id="lista-productos">
-                <!-- Aquí se agregan los productos antes de registrarlos -->
-            </ul>
+        <button class="btn" id="btn-indirecta">Registrar venta</button>
+    </section>
 
-            <button class="btn" id="btn-indirecta">Registrar venta</button>
+    <!-- Gastos -->
+    <section class="panel">
+        <h2 class="text-[--color-accent] font-bold mb-2">Gastos</h2>
 
-        </section>
+        <input class="entrada" id="desc-gasto" type="text" placeholder="Descripción">
+        <input class="entrada" id="monto-gasto" type="number" placeholder="Monto">
 
-        <section class="panel">
-            <!-- Se registraran los gastos que restan al total -->
-            <h2 class="titulo">Gastos</h2>
+        <button class="btn" id="btn-gasto">Registrar gasto</button>
+    </section>
+</main>
 
-            <input class="entrada" id="desc-gasto" type="text" placeholder="Descripción del gasto">
-            <input class="entrada" id="monto-gasto" type="number" placeholder="Monto">
-            <button class="btn" id="btn-gasto">Registrar gasto</button>
-        </section>
-    </main>
+<footer class="panel">
+    <section class="panel">
+        <h2 class="text-[--color-accent] font-bold">Ventas directas</h2>
+        <table id="tabla-directo" class="tabla">
+            <thead>
+                <tr class="tr">
+                    <th class="th">Producto</th>
+                    <th class="th">Cantidad</th>
+                    <th class="th">Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-    <footer class="panel">
-        <!-- Se mostraran todos los movimientos realizados-->
-         <section class="panel">
-            <h2 class="titulo">Ventas directas</h2>
-            <table id="tabla-directo" class="tabla">
-                <thead>
-                    <tr class="tr">
-                        <th class="th">Producto</th>
-                        <th class="th">Cantidad</th>
-                        <th class="th">Total</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
+        <h2 class="text-[--color-accent] font-bold mt-6">Ventas indirectas</h2>
+        <table id="tabla-indirecto" class="tabla">
+            <thead>
+                <tr class="tr">
+                    <th class="th">Vendedor</th>
+                    <th class="th">Productos</th>
+                    <th class="th">Cantidades</th>
+                    <th class="th">Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h2 class="text-[--color-accent] font-bold mt-6">Gastos</h2>
+        <table id="tabla-gastos" class="tabla">
+            <thead>
+                <tr class="tr">
+                    <th class="th">Descripción</th>
+                    <th class="th">Monto</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</footer>
+
+<script src="App.js"></script>
+</body>
+</html>
+
             </table>
 
             <h2 class="titulo">Ventas indirectas</h2>
