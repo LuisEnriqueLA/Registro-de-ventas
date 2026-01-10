@@ -1,82 +1,76 @@
-// ---------------------------
-// PERSISTENCIA
-// ---------------------------
-function save() {
-    localStorage.setItem("total", total);
-    localStorage.setItem("resumen", JSON.stringify(resumen));
-    localStorage.setItem("indirectas", document.querySelector("#tabla-indirecto tbody").innerHTML);
-    localStorage.setItem("gastos", document.querySelector("#tabla-gastos tbody").innerHTML);
-}
-
-function load() {
-    if (localStorage.getItem("total")) {
-        total = Number(localStorage.getItem("total"));
-    }
-
-    if (localStorage.getItem("resumen")) {
-        Object.assign(resumen, JSON.parse(localStorage.getItem("resumen")));
-        actualizarResumen();
-    }
-
-    document.querySelector("#tabla-indirecto tbody").innerHTML =
-        localStorage.getItem("indirectas") || "";
-
-    document.querySelector("#tabla-gastos tbody").innerHTML =
-        localStorage.getItem("gastos") || "";
-
-    actualizarTotal();
-}
-
-// ---------------------------
-// ESTADO INICIAL
-// ---------------------------
+// -------------------- ESTADO --------------------
 let total = 0;
-const resumen = {
+
+let resumen = {
     Cantinera: { cantidad: 0, total: 0 },
     "5kg": { cantidad: 0, total: 0 },
     Molido: { cantidad: 0, total: 0 },
     "1/4 Entero": { cantidad: 0, total: 0 },
     "3kg": { cantidad: 0, total: 0 }
 };
+
 let productosIndirectos = [];
 
-// ---------------------------
+// -------------------- PERSISTENCIA --------------------
+function guardarEstado() {
+    const estado = {
+        total,
+        resumen,
+        indirectas: document.querySelector("#tabla-indirecto").innerHTML,
+        gastos: document.querySelector("#tabla-gastos tbody").innerHTML
+    };
+
+    localStorage.setItem("controlVentas", JSON.stringify(estado));
+}
+
+function cargarEstado() {
+    const data = JSON.parse(localStorage.getItem("controlVentas"));
+    if (!data) return;
+
+    total = data.total;
+    resumen = data.resumen;
+
+    document.querySelector("#tabla-indirecto").innerHTML = data.indirectas;
+    document.querySelector("#tabla-gastos tbody").innerHTML = data.gastos;
+
+    actualizarTotal();
+    actualizarResumen();
+}
+
+// -------------------- DOM --------------------
 const totalEl = document.getElementById("total");
 const tablaResumen = document.querySelector("#tabla-directo tbody");
 
-// ---------------------------
-// FUNCIONES
-// ---------------------------
+// -------------------- FUNCIONES --------------------
 function actualizarTotal() {
     totalEl.textContent = `$${total.toFixed(2)}`;
-    save();
+    guardarEstado();
 }
 
 function actualizarResumen() {
     tablaResumen.innerHTML = "";
 
-    for (const p in resumen) {
-        const d = resumen[p];
-        if (d.cantidad === 0) continue;
+    for (const producto in resumen) {
+        const datos = resumen[producto];
+        if (datos.cantidad === 0) continue;
 
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${p}</td>
-            <td>${d.cantidad}</td>
-            <td>$${d.total.toFixed(2)}</td>
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${producto}</td>
+            <td>${datos.cantidad}</td>
+            <td>$${datos.total.toFixed(2)}</td>
         `;
-        tablaResumen.appendChild(fila);
+        tablaResumen.appendChild(tr);
     }
-    save();
+
+    guardarEstado();
 }
 
-// ---------------------------
-// VENTAS DIRECTAS
-// ---------------------------
-document.querySelectorAll("#ventas-directas button").forEach(boton => {
-    boton.addEventListener("click", () => {
-        const nombre = boton.dataset.nombre;
-        const precio = Number(boton.dataset.precio);
+// -------------------- VENTAS DIRECTAS --------------------
+document.querySelectorAll("#ventas-directas button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const nombre = btn.dataset.nombre;
+        const precio = Number(btn.dataset.precio);
 
         total += precio;
         resumen[nombre].cantidad++;
@@ -87,82 +81,76 @@ document.querySelectorAll("#ventas-directas button").forEach(boton => {
     });
 });
 
-// ---------------------------
-// VENTAS INDIRECTAS
-// ---------------------------
-document.querySelector("#btn-agregar-indirecto").addEventListener("click", () => {
+// -------------------- INDIRECTAS --------------------
+document.getElementById("btn-agregar-indirecto").addEventListener("click", () => {
     const producto = document.getElementById("tipo-indirecto").value;
     const cantidad = Number(document.getElementById("cant-indirecta").value);
     const precio = Number(document.getElementById("precio-indirecto").value);
 
-    if (!producto || cantidad <= 0 || precio <= 0) return alert("Campos incompletos");
+    if (!producto || cantidad <= 0 || precio <= 0) {
+        alert("Completa todos los campos");
+        return;
+    }
 
     productosIndirectos.push({ producto, cantidad, precio });
 
     const li = document.createElement("li");
     li.textContent = `${producto} x${cantidad} = $${(precio * cantidad).toFixed(2)}`;
-    document.querySelector("#lista-productos").appendChild(li);
+    document.getElementById("lista-productos").appendChild(li);
 
-    document.getElementById("tipo-indirecto").value = "";
     document.getElementById("cant-indirecta").value = "";
     document.getElementById("precio-indirecto").value = "";
 });
 
-document.querySelector("#btn-indirecta").addEventListener("click", () => {
+document.getElementById("btn-indirecta").addEventListener("click", () => {
     const vendedor = document.getElementById("vendedor").value;
-    const tbody = document.querySelector("#tabla-indirecto tbody");
+    if (!vendedor || productosIndirectos.length === 0) {
+        alert("Completa todos los datos");
+        return;
+    }
 
-    if (!vendedor || productosIndirectos.length === 0)
-        return alert("Falta vendedor o productos");
+    const tabla = document.getElementById("tabla-indirecto");
+    const tr = document.createElement("tr");
 
-    const fila = document.createElement("tr");
+    const totalVenta = productosIndirectos.reduce((acc, p) => acc + p.cantidad * p.precio, 0);
 
-    const totalVenta = productosIndirectos.reduce((a, p) => a + p.cantidad * p.precio, 0);
-
-    fila.innerHTML = `
+    tr.innerHTML = `
         <td>${vendedor}</td>
-        <td>${productosIndirectos.map(p => `${p.producto} x${p.cantidad}`).join("<br>")}</td>
+        <td>${productosIndirectos.map(p => p.producto).join("<br>")}</td>
         <td>${productosIndirectos.map(p => p.cantidad).join("<br>")}</td>
         <td>$${totalVenta.toFixed(2)}</td>
     `;
 
-    tbody.appendChild(fila);
+    tabla.appendChild(tr);
 
-    // sumar al total
     total += totalVenta;
     actualizarTotal();
 
     productosIndirectos = [];
-    document.querySelector("#lista-productos").innerHTML = "";
-
-    save();
+    document.getElementById("lista-productos").innerHTML = "";
 });
 
-// ---------------------------
-// GASTOS
-// ---------------------------
-document.querySelector("#btn-gasto").addEventListener("click", () => {
+// -------------------- GASTOS --------------------
+document.getElementById("btn-gasto").addEventListener("click", () => {
     const desc = document.getElementById("desc-gasto").value;
     const monto = Number(document.getElementById("monto-gasto").value);
 
-    if (!desc || monto <= 0) return alert("Datos incorrectos");
+    if (!desc || monto <= 0) {
+        alert("Completa los datos del gasto");
+        return;
+    }
+
+    const tbody = document.querySelector("#tabla-gastos tbody");
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${desc}</td><td>-$${monto.toFixed(2)}</td>`;
+    tbody.appendChild(tr);
 
     total -= monto;
     actualizarTotal();
 
-    const fila = document.createElement("tr");
-    fila.innerHTML = `
-        <td>${desc}</td>
-        <td>-$${monto.toFixed(2)}</td>
-    `;
-
-    document.querySelector("#tabla-gastos tbody").appendChild(fila);
-
     document.getElementById("desc-gasto").value = "";
     document.getElementById("monto-gasto").value = "";
-
-    save();
 });
 
-// ---------------------------
-load();
+// -------------------- CARGAR ESTADO --------------------
+cargarEstado();
