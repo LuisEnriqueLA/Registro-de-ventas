@@ -1,156 +1,120 @@
-// -------------------- ESTADO --------------------
-let total = 0;
-
-let resumen = {
-    Cantinera: { cantidad: 0, total: 0 },
-    "5kg": { cantidad: 0, total: 0 },
-    Molido: { cantidad: 0, total: 0 },
-    "1/4 Entero": { cantidad: 0, total: 0 },
-    "3kg": { cantidad: 0, total: 0 }
-};
-
-let productosIndirectos = [];
-
 // -------------------- PERSISTENCIA --------------------
-function guardarEstado() {
-    const estado = {
-        total,
-        resumen,
-        indirectas: document.querySelector("#tabla-indirecto").innerHTML,
-        gastos: document.querySelector("#tabla-gastos tbody").innerHTML
-    };
+const guardar = (clave, data) => localStorage.setItem(clave, JSON.stringify(data));
+const cargar = (clave, def) => JSON.parse(localStorage.getItem(clave)) || def;
 
-    localStorage.setItem("controlVentas", JSON.stringify(estado));
-}
+// -------------------- DATA --------------------
+let ventasDirectas = cargar("ventasDirectas", []);
+let ventasIndirectas = cargar("ventasIndirectas", []);
+let gastos = cargar("gastos", []);
 
-function cargarEstado() {
-    const data = JSON.parse(localStorage.getItem("controlVentas"));
-    if (!data) return;
+const listaIndirectos = ["Juan", "Ana", "Pedro", "Luis", "Carlos"];
 
-    total = data.total;
-    resumen = data.resumen;
+// -------------------- ELEMENTOS --------------------
+const tablaDirecta = document.getElementById("tablaDirecta");
+const tablaIndirecta = document.getElementById("tablaIndirecta");
+const tablaGasto = document.getElementById("tablaGasto");
+const totalHTML = document.getElementById("total");
+const selIndirecto = document.getElementById("selectIndirecto");
 
-    document.querySelector("#tabla-indirecto").innerHTML = data.indirectas;
-    document.querySelector("#tabla-gastos tbody").innerHTML = data.gastos;
-
-    actualizarTotal();
-    actualizarResumen();
-}
-
-// -------------------- DOM --------------------
-const totalEl = document.getElementById("total");
-const tablaResumen = document.querySelector("#tabla-directo tbody");
+// -------------------- INICIAL --------------------
+listaIndirectos.forEach(n => {
+    let op = document.createElement("option");
+    op.textContent = n;
+    selIndirecto.appendChild(op);
+});
 
 // -------------------- FUNCIONES --------------------
-function actualizarTotal() {
-    totalEl.textContent = `$${total.toFixed(2)}`;
-    guardarEstado();
-}
-
-function actualizarResumen() {
-    tablaResumen.innerHTML = "";
-
-    for (const producto in resumen) {
-        const datos = resumen[producto];
-        if (datos.cantidad === 0) continue;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${producto}</td>
-            <td>${datos.cantidad}</td>
-            <td>$${datos.total.toFixed(2)}</td>
-        `;
-        tablaResumen.appendChild(tr);
-    }
-
-    guardarEstado();
-}
-
-// -------------------- VENTAS DIRECTAS --------------------
-document.querySelectorAll("#ventas-directas button").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const nombre = btn.dataset.nombre;
-        const precio = Number(btn.dataset.precio);
-
-        total += precio;
-        resumen[nombre].cantidad++;
-        resumen[nombre].total += precio;
-
-        actualizarTotal();
-        actualizarResumen();
+function actualizarTablas() {
+    // Ventas directas
+    tablaDirecta.innerHTML = "";
+    ventasDirectas.forEach(v => {
+        tablaDirecta.innerHTML += `
+            <tr>
+                <td>${v.tipo}</td>
+                <td>${v.cantidad}</td>
+                <td>$${v.total}</td>
+            </tr>`;
     });
-});
 
-// -------------------- INDIRECTAS --------------------
-document.getElementById("btn-agregar-indirecto").addEventListener("click", () => {
-    const producto = document.getElementById("tipo-indirecto").value;
-    const cantidad = Number(document.getElementById("cant-indirecta").value);
-    const precio = Number(document.getElementById("precio-indirecto").value);
+    // Ventas indirectas
+    tablaIndirecta.innerHTML = "";
+    ventasIndirectas.forEach(v => {
+        tablaIndirecta.innerHTML += `
+            <tr>
+                <td>${v.nombre}</td>
+                <td>${v.cantidad}</td>
+                <td>${v.fecha}</td>
+            </tr>`;
+    });
 
-    if (!producto || cantidad <= 0 || precio <= 0) {
-        alert("Completa todos los campos");
-        return;
-    }
+    // Gastos
+    tablaGasto.innerHTML = "";
+    gastos.forEach(g => {
+        tablaGasto.innerHTML += `
+            <tr>
+                <td>${g.desc}</td>
+                <td>$${g.monto}</td>
+            </tr>`;
+    });
 
-    productosIndirectos.push({ producto, cantidad, precio });
+    // Total
+    const total = 
+        ventasDirectas.reduce((a,b)=>a+b.total,0) +
+        ventasIndirectas.reduce((a,b)=>a+b.cantidad * 20,0) -
+        gastos.reduce((a,b)=>a+b.monto,0);
 
-    const li = document.createElement("li");
-    li.textContent = `${producto} x${cantidad} = $${(precio * cantidad).toFixed(2)}`;
-    document.getElementById("lista-productos").appendChild(li);
+    totalHTML.textContent = `$${total.toFixed(2)}`;
+}
 
-    document.getElementById("cant-indirecta").value = "";
-    document.getElementById("precio-indirecto").value = "";
-});
+// -------------------- BOTONES --------------------
 
-document.getElementById("btn-indirecta").addEventListener("click", () => {
-    const vendedor = document.getElementById("vendedor").value;
-    if (!vendedor || productosIndirectos.length === 0) {
-        alert("Completa todos los datos");
-        return;
-    }
+// Venta directa
+document.getElementById("btnGuardarDirecta").onclick = () => {
+    const tipo = document.getElementById("tipoD").value;
+    const cant = Number(document.getElementById("cantD").value);
+    const precio = Number(document.getElementById("precioD").value);
 
-    const tabla = document.getElementById("tabla-indirecto");
-    const tr = document.createElement("tr");
+    if (!cant || !precio) return alert("Completa todos los campos");
 
-    const totalVenta = productosIndirectos.reduce((acc, p) => acc + p.cantidad * p.precio, 0);
+    ventasDirectas.push({
+        tipo,
+        cantidad: cant,
+        total: cant * precio
+    });
 
-    tr.innerHTML = `
-        <td>${vendedor}</td>
-        <td>${productosIndirectos.map(p => p.producto).join("<br>")}</td>
-        <td>${productosIndirectos.map(p => p.cantidad).join("<br>")}</td>
-        <td>$${totalVenta.toFixed(2)}</td>
-    `;
+    guardar("ventasDirectas", ventasDirectas);
+    actualizarTablas();
+};
 
-    tabla.appendChild(tr);
+// Venta indirecta
+document.getElementById("btnGuardarIndirecta").onclick = () => {
+    const nombre = selIndirecto.value;
+    const cantidad = Number(document.getElementById("cantidadIndirecto").value);
 
-    total += totalVenta;
-    actualizarTotal();
+    if (!cantidad) return alert("Cantidad inválida");
 
-    productosIndirectos = [];
-    document.getElementById("lista-productos").innerHTML = "";
-});
+    ventasIndirectas.push({
+        nombre,
+        cantidad,
+        fecha: new Date().toLocaleDateString()
+    });
 
-// -------------------- GASTOS --------------------
-document.getElementById("btn-gasto").addEventListener("click", () => {
-    const desc = document.getElementById("desc-gasto").value;
-    const monto = Number(document.getElementById("monto-gasto").value);
+    guardar("ventasIndirectas", ventasIndirectas);
+    actualizarTablas();
+};
 
-    if (!desc || monto <= 0) {
-        alert("Completa los datos del gasto");
-        return;
-    }
+// Gasto
+document.getElementById("btnGuardarGasto").onclick = () => {
+    const desc = document.getElementById("descGasto").value;
+    const monto = Number(document.getElementById("montoGasto").value);
 
-    const tbody = document.querySelector("#tabla-gastos tbody");
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${desc}</td><td>-$${monto.toFixed(2)}</td>`;
-    tbody.appendChild(tr);
+    if (!desc || !monto) return alert("Completa todos los campos");
 
-    total -= monto;
-    actualizarTotal();
+    gastos.push({ desc, monto });
 
-    document.getElementById("desc-gasto").value = "";
-    document.getElementById("monto-gasto").value = "";
-});
+    guardar("gastos", gastos);
+    actualizarTablas();
+};
 
-// -------------------- CARGAR ESTADO --------------------
-cargarEstado();
+// -------------------- INICIO --------------------
+actualizarTablas();
