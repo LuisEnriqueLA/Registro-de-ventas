@@ -1,223 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control de Ventas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro BlueBerry</title>
 
-<style>
-    :root {
-        --fondo: #0b0f19;
-        --panel: #101520;
-        --azul: #1e90ff;
-        --texto: #e6e6e6;
-        --borde: #1f2530;
-    }
-
-    body {
-        background: var(--fondo);
-        color: var(--texto);
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-size: 1.8rem;
-    }
-
-    .panel {
-        background: var(--panel);
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid var(--borde);
-        margin-bottom: 25px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    h2 {
-        margin-top: 0;
-        font-size: 1.3rem;
-    }
-
-    input, select {
-        background: #0d121b;
-        border: 1px solid var(--borde);
-        padding: 10px;
-        border-radius: 5px;
-        color: var(--texto);
-        width: 100%;
-        margin-bottom: 10px;
-        font-size: 1rem;
-        box-sizing: border-box;
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 5px;
-        border-radius: 5px;
-        border: none;
-        background: var(--azul);
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 1rem;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        font-size: 0.95rem;
-        overflow-x: auto;
-        display: block;
-    }
-
-    th, td {
-        border: 1px solid var(--borde);
-        padding: 10px;
-        text-align: left;
-    }
-
-    ul {
-        padding-left: 18px;
-        margin-top: 10px;
-        word-wrap: break-word;
-    }
-
-    /* BOTONES DE PRODUCTOS EN GRID RESPONSIVO */
-    #ventas-directas button {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    @media (min-width: 600px) {
-        #ventas-directas button {
-            width: calc(50% - 10px);
-            display: inline-block;
+    <style>
+        :root {
+            --fondo: #0b0f19;
+            --panel: #111827;
+            --primario: #1d4ed8;
+            --texto: #f3f4f6;
+            --borde: #1f2937;
         }
-    }
 
-    @media (min-width: 900px) {
-        #ventas-directas button {
-            width: calc(33.3% - 10px);
+        body {
+            background: var(--fondo);
+            color: var(--texto);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
-    }
 
-    /* Paneles con límites de ancho en pantallas grandes */
-    .panel {
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Mejoras móviles */
-    @media (max-width: 480px) {
         h1 {
-            font-size: 1.6rem;
+            text-align: center;
         }
-        h2 {
-            font-size: 1.2rem;
+
+        .contenedor {
+            display: grid;
+            gap: 20px;
+            max-width: 900px;
+            margin: auto;
         }
+
+        .panel {
+            background: var(--panel);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--borde);
+        }
+
+        .entrada {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: none;
+            background: #374151;
+            color: white;
+        }
+
         button {
-            font-size: 0.9rem;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: var(--primario);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
         }
-        input, select {
-            font-size: 0.9rem;
+
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
         }
-    }
-</style>
+
+        td, th {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #1f2937;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .panel {
+                padding: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h1>Control de Ventas</h1>
+    <h1>Registro BlueBerry</h1>
 
-<!-- TOTAL -->
-<section class="panel">
-    <h2>Total del Día: <span id="total">$0.00</span></h2>
-</section>
+    <div class="contenedor">
 
-<!-- VENTAS DIRECTAS -->
-<section class="panel" id="ventas-directas">
-    <h2>Ventas Directas</h2>
+        <!-- Ventas Directas -->
+        <section class="panel">
+            <h2>Ventas Directas</h2>
 
-    <button data-nombre="Cantinera" data-precio="100">Cantinera $100</button>
-    <button data-nombre="5kg" data-precio="460">5kg $460</button>
-    <button data-nombre="Molido" data-precio="140">Molido $140</button>
-    <button data-nombre="1/4 Entero" data-precio="35">1/4 Entero $35</button>
-    <button data-nombre="3kg" data-precio="300">3kg $300</button>
+            <label>Tipo:</label>
+            <select id="tipoD" class="entrada">
+                <option value="Sin Leche">Sin Leche</option>
+                <option value="Con Leche">Con Leche</option>
+                <option value="Especial Blue">Especial Blue</option>
+                <option value="Especial Pink">Especial Pink</option>
+            </select>
 
-    <table id="tabla-directo">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cant</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
+            <label>Cantidad:</label>
+            <input id="cantD" type="number" class="entrada">
 
-<!-- VENTAS INDIRECTAS -->
-<section class="panel">
-    <h2>Registrar Venta Indirecta</h2>
+            <label>Precio por Pieza:</label>
+            <input id="precioD" type="number" class="entrada">
 
-    <input id="vendedor" placeholder="Vendedor">
+            <button id="btnGuardarDirecta">Guardar Venta Directa</button>
 
-    <select id="tipo-indirecto">
-        <option disabled selected>Producto</option>
-        <option value="Cantinera">Cantinera</option>
-        <option value="5kg">5kg</option>
-        <option value="Molido">Molido</option>
-    </select>
+            <table>
+                <thead>
+                    <tr><th>Tipo</th><th>Cant.</th><th>Total</th></tr>
+                </thead>
+                <tbody id="tablaDirecta"></tbody>
+            </table>
+        </section>
 
-    <input id="cant-indirecta" type="number" placeholder="Cantidad">
-    <input id="precio-indirecto" type="number" placeholder="Precio Unitario">
+        <!-- Ventas Indirectas -->
+        <section class="panel">
+            <h2>Ventas Indirectas</h2>
 
-    <button id="btn-agregar-indirecto">Agregar producto</button>
+            <label>Nombre:</label>
+            <select id="selectIndirecto" class="entrada"></select>
 
-    <ul id="lista-productos"></ul>
+            <label>Cantidad:</label>
+            <input id="cantidadIndirecto" type="number" class="entrada">
 
-    <button id="btn-indirecta">Registrar venta</button>
+            <button id="btnGuardarIndirecta">Guardar Venta Indirecta</button>
 
-    <table id="tabla-indirecto">
-        <thead>
-            <tr>
-                <th>Vendedor</th>
-                <th>Producto</th>
-                <th>Cant</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-    </table>
-</section>
+            <table>
+                <thead>
+                    <tr><th>Nombre</th><th>Cant.</th><th>Fecha</th></tr>
+                </thead>
+                <tbody id="tablaIndirecta"></tbody>
+            </table>
+        </section>
 
-<!-- GASTOS -->
-<section class="panel">
-    <h2>Gastos</h2>
+        <!-- Gastos -->
+        <section class="panel">
+            <h2>Gastos</h2>
 
-    <input id="desc-gasto" placeholder="Descripción del gasto">
-    <input id="monto-gasto" type="number" placeholder="Monto del gasto">
+            <label>Descripción:</label>
+            <input id="descGasto" class="entrada">
 
-    <button id="btn-gasto">Registrar gasto</button>
+            <label>Monto:</label>
+            <input id="montoGasto" type="number" class="entrada">
 
-    <table id="tabla-gastos">
-        <thead>
-            <tr>
-                <th>Descripción</th>
-                <th>Monto</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
+            <button id="btnGuardarGasto">Guardar Gasto</button>
 
-<script src="app.js"></script>
+            <table>
+                <thead>
+                    <tr><th>Descripción</th><th>Monto</th></tr>
+                </thead>
+                <tbody id="tablaGasto"></tbody>
+            </table>
+        </section>
+
+        <!-- Total -->
+        <section class="panel">
+            <h2>Total Ganado</h2>
+            <p id="total">$0.00</p>
+        </section>
+
+    </div>
+
+    <script src="app.js"></script>
+
 </body>
 </html>
