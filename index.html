@@ -6,131 +6,131 @@
 <title>Control de Ventas</title>
 
 <style>
-    :root {
-        --fondo: #0b0f19;
-        --panel: #101520;
-        --azul: #1e90ff;
-        --texto: #e6e6e6;
-        --borde: #1f2530;
-    }
+    :root {
+        --fondo: #0b0f19;
+        --panel: #101520;
+        --azul: #1e90ff;
+        --texto: #e6e6e6;
+        --borde: #1f2530;
+    }
 
-    body {
-        background: var(--fondo);
-        color: var(--texto);
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-    }
+    body {
+        background: var(--fondo);
+        color: var(--texto);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 25px;
-        font-size: 1.8rem;
-    }
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+    }
 
-    .panel {
-        background: var(--panel);
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid var(--borde);
-        margin-bottom: 25px;
-        width: 100%;
-        box-sizing: border-box;
-    }
+    .panel {
+        background: var(--panel);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--borde);
+        margin-bottom: 25px;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-    h2 {
-        margin-top: 0;
-        font-size: 1.3rem;
-    }
+    h2 {
+        margin-top: 0;
+        font-size: 1.3rem;
+    }
 
-    input, select {
-        background: #0d121b;
-        border: 1px solid var(--borde);
-        padding: 10px;
-        border-radius: 5px;
-        color: var(--texto);
-        width: 100%;
-        margin-bottom: 10px;
-        font-size: 1rem;
-        box-sizing: border-box;
-    }
+    input, select {
+        background: #0d121b;
+        border: 1px solid var(--borde);
+        padding: 10px;
+        border-radius: 5px;
+        color: var(--texto);
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
 
-    button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 5px;
-        border-radius: 5px;
-        border: none;
-        background: var(--azul);
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 1rem;
-    }
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: none;
+        background: var(--azul);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1rem;
+    }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        font-size: 0.95rem;
-        overflow-x: auto;
-        display: block;
-    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 0.95rem;
+        overflow-x: auto;
+        display: block;
+    }
 
-    th, td {
-        border: 1px solid var(--borde);
-        padding: 10px;
-        text-align: left;
-    }
+    th, td {
+        border: 1px solid var(--borde);
+        padding: 10px;
+        text-align: left;
+    }
 
-    ul {
-        padding-left: 18px;
-        margin-top: 10px;
-        word-wrap: break-word;
-    }
+    ul {
+        padding-left: 18px;
+        margin-top: 10px;
+        word-wrap: break-word;
+    }
 
-    /* BOTONES DE PRODUCTOS EN GRID RESPONSIVO */
-    #ventas-directas button {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-    }
+    /* 🔥 BOTONES DE PRODUCTOS EN GRID RESPONSIVO */
+    #ventas-directas button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
 
-    @media (min-width: 600px) {
-        #ventas-directas button {
-            width: calc(50% - 10px);
-            display: inline-block;
-        }
-    }
+    @media (min-width: 600px) {
+        #ventas-directas button {
+            width: calc(50% - 10px);
+            display: inline-block;
+        }
+    }
 
-    @media (min-width: 900px) {
-        #ventas-directas button {
-            width: calc(33.3% - 10px);
-        }
-    }
+    @media (min-width: 900px) {
+        #ventas-directas button {
+            width: calc(33.3% - 10px);
+        }
+    }
 
-    /* Paneles con límites de ancho en pantallas grandes */
-    .panel {
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    /* 🔥 Paneles con límites de ancho en pantallas grandes */
+    .panel {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-    /* Mejoras móviles */
-    @media (max-width: 480px) {
-        h1 {
-            font-size: 1.6rem;
-        }
-        h2 {
-            font-size: 1.2rem;
-        }
-        button {
-            font-size: 0.9rem;
-        }
-        input, select {
-            font-size: 0.9rem;
-        }
-    }
+    /* 🔥 Mejoras móviles */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.6rem;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+        button {
+            font-size: 0.9rem;
+        }
+        input, select {
+            font-size: 0.9rem;
+        }
+    }
 </style>
 </head>
 <body>
@@ -139,84 +139,83 @@
 
 <!-- TOTAL -->
 <section class="panel">
-    <h2>Total del Día: <span id="total">$0.00</span></h2>
+    <h2>Total del Día: <span id="total">$0.00</span></h2>
 </section>
 
 <!-- VENTAS DIRECTAS -->
 <section class="panel" id="ventas-directas">
-    <h2>Ventas Directas</h2>
+    <h2>Ventas Directas</h2>
 
-    <button data-nombre="Cantinera" data-precio="100">Cantinera $100</button>
-    <button data-nombre="5kg" data-precio="460">5kg $460</button>
-    <button data-nombre="Molido" data-precio="140">Molido $140</button>
-    <button data-nombre="1/4 Entero" data-precio="35">1/4 Entero $35</button>
-    <button data-nombre="3kg" data-precio="300">3kg $300</button>
+    <button data-nombre="Cantinera" data-precio="100">Cantinera $100</button>
+    <button data-nombre="5kg" data-precio="460">5kg $460</button>
+    <button data-nombre="Molido" data-precio="140">Molido $140</button>
+    <button data-nombre="1/4 Entero" data-precio="35">1/4 Entero $35</button>
+    <button data-nombre="3kg" data-precio="300">3kg $300</button>
 
-    <table id="tabla-directo">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cant</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <table id="tabla-directo">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cant</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </section>
 
 <!-- VENTAS INDIRECTAS -->
 <section class="panel">
-    <h2>Registrar Venta Indirecta</h2>
+    <h2>Registrar Venta Indirecta</h2>
 
-    <input id="vendedor" placeholder="Vendedor">
+    <input id="vendedor" placeholder="Vendedor">
 
-    <select id="tipo-indirecto">
-        <option disabled selected>Producto</option>
-        <option value="Cantinera">Cantinera</option>
-        <option value="5kg">5kg</option>
-        <option value="Molido">Molido</option>
-    </select>
+    <select id="tipo-indirecto">
+        <option disabled selected>Producto</option>
+        <option value="Cantinera">Cantinera</option>
+        <option value="5kg">5kg</option>
+        <option value="Molido">Molido</option>
+    </select>
 
-    <input id="cant-indirecta" type="number" placeholder="Cantidad">
-    <input id="precio-indirecto" type="number" placeholder="Precio Unitario">
+    <input id="cant-indirecta" type="number" placeholder="Cantidad">
+    <input id="precio-indirecto" type="number" placeholder="Precio Unitario">
 
-    <button id="btn-agregar-indirecto">Agregar producto</button>
+    <button id="btn-agregar-indirecto">Agregar producto</button>
 
-    <ul id="lista-productos"></ul>
+    <ul id="lista-productos"></ul>
 
-    <button id="btn-indirecta">Registrar venta</button>
+    <button id="btn-indirecta">Registrar venta</button>
 
-    <table id="tabla-indirecto">
-        <thead>
-            <tr>
-                <th>Vendedor</th>
-                <th>Producto</th>
-                <th>Cant</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-    </table>
+    <table id="tabla-indirecto">
+        <thead>
+            <tr>
+                <th>Vendedor</th>
+                <th>Producto</th>
+                <th>Cant</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+    </table>
 </section>
 
 <!-- GASTOS -->
 <section class="panel">
-    <h2>Gastos</h2>
+    <h2>Gastos</h2>
 
-    <input id="desc-gasto" placeholder="Descripción del gasto">
-    <input id="monto-gasto" type="number" placeholder="Monto del gasto">
+    <input id="desc-gasto" placeholder="Descripción del gasto">
+    <input id="monto-gasto" type="number" placeholder="Monto del gasto">
 
-    <button id="btn-gasto">Registrar gasto</button>
+    <button id="btn-gasto">Registrar gasto</button>
 
-    <table id="tabla-gastos">
-        <thead>
-    
-        <tr>
-                <th>Descripción</th>
-                <th>Monto</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <table id="tabla-gastos">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Monto</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </section>
 
 <script src="app.js"></script>
