@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Control de Ventas</title>
 
 <style>
@@ -23,6 +24,8 @@
 
     h1 {
         text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
     }
 
     .panel {
@@ -31,21 +34,30 @@
         border-radius: 8px;
         border: 1px solid var(--borde);
         margin-bottom: 25px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 1.3rem;
     }
 
     input, select {
         background: #0d121b;
         border: 1px solid var(--borde);
-        padding: 8px;
+        padding: 10px;
         border-radius: 5px;
         color: var(--texto);
         width: 100%;
         margin-bottom: 10px;
+        font-size: 1rem;
+        box-sizing: border-box;
     }
 
     button {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         margin-top: 5px;
         border-radius: 5px;
         border: none;
@@ -53,18 +65,71 @@
         color: white;
         font-weight: bold;
         cursor: pointer;
+        font-size: 1rem;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 15px;
+        font-size: 0.95rem;
+        overflow-x: auto;
+        display: block;
     }
 
     th, td {
         border: 1px solid var(--borde);
         padding: 10px;
         text-align: left;
+    }
+
+    ul {
+        padding-left: 18px;
+        margin-top: 10px;
+        word-wrap: break-word;
+    }
+
+    /* BOTONES DE PRODUCTOS EN GRID RESPONSIVO */
+    #ventas-directas button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    @media (min-width: 600px) {
+        #ventas-directas button {
+            width: calc(50% - 10px);
+            display: inline-block;
+        }
+    }
+
+    @media (min-width: 900px) {
+        #ventas-directas button {
+            width: calc(33.3% - 10px);
+        }
+    }
+
+    /* Paneles con límites de ancho en pantallas grandes */
+    .panel {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Mejoras móviles */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.6rem;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+        button {
+            font-size: 0.9rem;
+        }
+        input, select {
+            font-size: 0.9rem;
+        }
     }
 </style>
 </head>
@@ -80,6 +145,7 @@
 <!-- VENTAS DIRECTAS -->
 <section class="panel" id="ventas-directas">
     <h2>Ventas Directas</h2>
+
     <button data-nombre="Cantinera" data-precio="100">Cantinera $100</button>
     <button data-nombre="5kg" data-precio="460">5kg $460</button>
     <button data-nombre="Molido" data-precio="140">Molido $140</button>
@@ -152,8 +218,6 @@
     </table>
 </section>
 
-<!-- ARCHIVO JS -->
 <script src="app.js"></script>
 </body>
 </html>
-
