@@ -231,4 +231,35 @@ document.getElementById("btn-gasto").addEventListener("click", () => {
 
     refrescarTodo();
 });
+
+// ----- BOTÓN REINICIAR DÍA -----
+document.getElementById("reiniciar-dia").addEventListener("click", () => {
+    if (!confirm("¿Seguro que quieres reiniciar todo el día?")) return;
+
+    // Borrar datos guardados
+    localStorage.clear();
+
+    // Reiniciar total
+    document.getElementById("total").textContent = "$0.00";
+
+    // Limpiar tablas
+    document.querySelector("#tabla-directo tbody").innerHTML = "";
+    document.querySelector("#tabla-indirecto").innerHTML = `
+        <thead>
+            <tr>
+                <th>Vendedor</th>
+                <th>Producto</th>
+                <th>Cant</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+    `;
+    document.querySelector("#tabla-gastos tbody").innerHTML = "";
+
+    // Limpiar lista de productos indirectos
+    document.getElementById("lista-productos").innerHTML = "";
+
+    alert("Día reiniciado correctamente.");
+});
+
         
