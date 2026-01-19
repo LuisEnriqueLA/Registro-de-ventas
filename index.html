@@ -36,6 +36,9 @@
         margin-bottom: 25px;
         width: 100%;
         box-sizing: border-box;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h2 {
@@ -89,47 +92,31 @@
         word-wrap: break-word;
     }
 
-    /* BOTONES DE PRODUCTOS EN GRID RESPONSIVO */
-    #ventas-directas button {
+    /* GRID DE BOTONES DIRECTOS */
+    #ventas-directas .btn-directo {
         display: block;
         width: 100%;
         margin-bottom: 10px;
     }
 
     @media (min-width: 600px) {
-        #ventas-directas button {
+        #ventas-directas .btn-directo {
             width: calc(50% - 10px);
             display: inline-block;
         }
     }
 
     @media (min-width: 900px) {
-        #ventas-directas button {
+        #ventas-directas .btn-directo {
             width: calc(33.3% - 10px);
         }
     }
 
-    /* Paneles con límites de ancho en pantallas grandes */
-    .panel {
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     /* Mejoras móviles */
     @media (max-width: 480px) {
-        h1 {
-            font-size: 1.6rem;
-        }
-        h2 {
-            font-size: 1.2rem;
-        }
-        button {
-            font-size: 0.9rem;
-        }
-        input, select {
-            font-size: 0.9rem;
-        }
+        h1 { font-size: 1.6rem; }
+        h2 { font-size: 1.2rem; }
+        button, input, select { font-size: 0.9rem; }
     }
 </style>
 </head>
@@ -147,11 +134,11 @@
 <section class="panel" id="ventas-directas">
     <h2>Ventas Directas</h2>
 
-    <button data-nombre="Cantinera" data-precio="60">Cantinera $60</button>
-    <button data-nombre="5kg" data-precio="20">5kg $20</button>
-    <button data-nombre="Molido" data-precio="40">Molido $40</button>
-    <button data-nombre="1/4 Entero" data-precio="40">1/4 Entero $40</button>
-    <button data-nombre="3kg" data-precio="12">3kg $12</button>
+    <button class="btn-directo" data-nombre="Cantinera" data-precio="60">Cantinera $60</button>
+    <button class="btn-directo" data-nombre="5kg" data-precio="20">5kg $20</button>
+    <button class="btn-directo" data-nombre="Molido" data-precio="40">Molido $40</button>
+    <button class="btn-directo" data-nombre="1/4 Entero" data-precio="40">1/4 Entero $40</button>
+    <button class="btn-directo" data-nombre="3kg" data-precio="12">3kg $12</button>
 
     <table id="tabla-directo">
         <thead>
